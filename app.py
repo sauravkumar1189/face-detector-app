@@ -51,29 +51,33 @@ if page == "🔍 Try the Model":
     col1, col2 = st.columns([1, 1])
 
     if uploaded is not None:
-        image = Image.open(uploaded).convert("RGB")
-        image_arr = np.array(image)
-        with col1:
-            st.image(image_arr, caption="Uploaded image", use_container_width=True)
+        try:
+            image = Image.open(uploaded).convert("RGB")
+            image_arr = np.array(image)
+            with col1:
+                st.image(image_arr, caption="Uploaded image", width=400)
 
-        with st.spinner("Analyzing..."):
-            model = load_model()
-            x = preprocess(image)
-            preds = model.predict(x, verbose=0)[0]
-            pred_idx = int(np.argmax(preds))
-            confidence = float(preds[pred_idx]) * 100
+            with st.spinner("Analyzing..."):
+                model = load_model()
+                x = preprocess(image)
+                preds = model.predict(x, verbose=0)[0]
+                pred_idx = int(np.argmax(preds))
+                confidence = float(preds[pred_idx]) * 100
 
-        with col2:
-            label = CLASS_NAMES[pred_idx]
-            if label == "Real":
-                st.success(f"### ✅ Prediction: {label}")
-            else:
-                st.error(f"### 🤖 Prediction: {label}")
-            st.metric("Confidence", f"{confidence:.2f}%")
+            with col2:
+                label = CLASS_NAMES[pred_idx]
+                if label == "Real":
+                    st.success(f"### ✅ Prediction: {label}")
+                else:
+                    st.error(f"### 🤖 Prediction: {label}")
+                st.metric("Confidence", f"{confidence:.2f}%")
 
-            st.write("**Class probabilities**")
-            st.progress(float(preds[1]), text=f"Real: {preds[1]*100:.2f}%")
-            st.progress(float(preds[0]), text=f"Fake: {preds[0]*100:.2f}%")
+                st.write("**Class probabilities**")
+                st.progress(float(preds[1]), text=f"Real: {preds[1]*100:.2f}%")
+                st.progress(float(preds[0]), text=f"Fake: {preds[0]*100:.2f}%")
+        except Exception as e:
+            st.error("Something went wrong processing this image:")
+            st.exception(e)
     else:
         st.info("👆 Upload a JPG or PNG face image to get started.")
 
