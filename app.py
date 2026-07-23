@@ -51,7 +51,7 @@ if page == "🔍 Try the Model":
     col1, col2 = st.columns([1, 1])
 
     if uploaded is not None:
-        image = Image.open(uploaded)
+        image = Image.open(uploaded).convert("RGB")
         with col1:
             st.image(image, caption="Uploaded image", use_container_width=True)
 
