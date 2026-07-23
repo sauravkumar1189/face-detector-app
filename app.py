@@ -96,16 +96,16 @@ else:
     st.text(report)
 
     st.subheader("Confusion Matrix")
-    st.image("results/confusion_matrix.png", use_container_width=False)
+    st.image("results/confusion_matrix.png")
 
     st.subheader("ROC Curve")
-    st.image("results/roc_curve.png", use_container_width=False)
+    st.image("results/roc_curve.png")
 
     st.subheader("Training History")
-    st.image("results/training_history.png", use_container_width=True)
+    st.image("results/training_history.png")
 
     st.subheader("Grad-CAM — what the model is looking at")
-    st.image("results/gradcam_samples.png", use_container_width=True)
+    st.image("results/gradcam_samples.png")
 
     st.subheader("Sample Predictions")
-    st.image("results/sample_predictions.png", use_container_width=True)
+    st.image("results/sample_predictions.png")
