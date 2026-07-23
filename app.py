@@ -52,8 +52,9 @@ if page == "🔍 Try the Model":
 
     if uploaded is not None:
         image = Image.open(uploaded).convert("RGB")
+        image_arr = np.array(image)
         with col1:
-            st.image(image, caption="Uploaded image", use_container_width=True)
+            st.image(image_arr, caption="Uploaded image", use_container_width=True)
 
         with st.spinner("Analyzing..."):
             model = load_model()
